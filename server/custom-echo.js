@@ -1,10 +1,12 @@
 // slightly modified version of echo-server.js for the web-sockets demo
+// To start this server use:
+//     > node custom-echo.js localhost
 
-var sys = require("sys")
+var sys = require("util")
   , fs = require("fs")
   , path = require("path")
   , http = require("http")
-  , ws = require(__dirname + '/node-websocket-server/lib/ws');
+  , ws = require(__dirname + '/node-websocket-server/lib/ws/server');
 
 /*-----------------------------------------------
   logging:
@@ -67,7 +69,7 @@ var server = ws.createServer({
 }, httpServer);
 
 server.addListener("listening", function(){
-  log("Listening for connections on " + process.ARGV[2]);
+  log("Listening for connections on " + process.argv[2]);
 });
 
 // Handle WebSocket Requests
@@ -90,7 +92,7 @@ server.addListener("close", function(conn){
   conn.broadcast(connected+'');
 });
 
-server.listen(parseInt(process.ARGV[2]) || 8000);
+server.listen(parseInt(process.argv[2]) || 8001);
 // Handle HTTP Requests:
 
 // This will hijack the http server, if the httpserver doesn't 
